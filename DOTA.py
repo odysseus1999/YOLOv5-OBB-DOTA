@@ -1,7 +1,7 @@
-# coding=gbk
+# -*- coding: utf-8 -*-
 
-#The code is used for visulization, inspired from cocoapi
-#  Licensed under the Simplified BSD License [see bsd.txt]
+# The code is used for visualization, inspired from cocoapi
+# Licensed under the Simplified BSD License [see bsd.txt]
 
 import os
 import matplotlib.pyplot as plt
@@ -39,9 +39,8 @@ class DOTA:
 
     def getImgIds(self, catNms=[]):
         """
-        :param catNms: category names 类名 eg:catNms=['ships']
-        :return: all the image ids contain the categories 所有包含该类名的图片id eg:['P0706', 'P
-        1234', 'P2709']
+        :param catNms: category names
+        :return: all the image ids contain the categories
         """
         catNms = catNms if _isArrayLike(catNms) else [catNms]
         if len(catNms) == 0:
@@ -55,7 +54,7 @@ class DOTA:
                     imgids &= set(self.catToImgs[cat])
         return list(imgids)
 
-    def loadAnns(self, catNms=[], imgId = None, difficult=None):
+    def loadAnns(self, catNms=[], imgId=None, difficult=None):
         """
         :param catNms: category names
         :param imgId: the img to load anns
@@ -67,15 +66,17 @@ class DOTA:
             return objects
         outobjects = [obj for obj in objects if (obj['name'] in catNms)]
         return outobjects
+
     def showAnns(self, objects, imgId, range):
         """
-        :param catNms: category names 类名
-        :param objects: objects to show  即labels信息
-        :param imgId: img to show 待显示的图片id
-        :param range: display range in the img 图片的显示范围
+        :param catNms: category names
+        :param objects: objects to show
+        :param imgId: img to show
+        :param range: display range in the img
         :return:
         """
         img = self.loadImgs(imgId)[0]
+        plt.figure(figsize=(12, 12))  # Increase figure size
         plt.imshow(img)
         plt.axis('off')
 
@@ -93,16 +94,20 @@ class DOTA:
             point = poly[0]
             circle = Circle((point[0], point[1]), r)
             circles.append(circle)
+            # Add label with larger font size and background color for better visibility
+            x, y = poly[0]
+            ax.text(x, y, obj['name'], fontsize=6, color='white', bbox=dict(facecolor='none', alpha=0.0))
         p = PatchCollection(polygons, facecolors=color, linewidths=0, alpha=0.4)
         ax.add_collection(p)
         p = PatchCollection(polygons, facecolors='none', edgecolors=color, linewidths=2)
         ax.add_collection(p)
         p = PatchCollection(circles, facecolors='red')
         ax.add_collection(p)
+
     def loadImgs(self, imgids=[]):
         """
-        :param imgids: integer ids specifying img 待加载的图片名 eg:imgids=['P0706','P0770']
-        :return: loaded img objects 加载的图片张量数组 imgs=[...,...]
+        :param imgids: integer ids specifying img
+        :return: loaded img objects
         """
         print('isarralike:', _isArrayLike(imgids))
         imgids = imgids if _isArrayLike(imgids) else [imgids]
@@ -116,21 +121,20 @@ class DOTA:
         return imgs
 
 if __name__ == '__main__':
-    examplesplit = DOTA(r'./DOTA_demo')  # (r'./example')
-    imgids = examplesplit.getImgIds(catNms=['small-vehicle'])  # 获取包含该类名的所有图片id eg:['P1088']
-    img = examplesplit.loadImgs(imgids)  # 获取对应id图片所对应的small-vehicle张量数组
+    examplesplit = DOTA(r'./example_split')
+    imgids = examplesplit.getImgIds(catNms=['small-vehicle'])
+    img = examplesplit.loadImgs(imgids)
     for imgid in imgids:
-        imgid = 'P0003'  #图片名称
-        anns = examplesplit.loadAnns(imgId=imgid)  # 加载对应id图片的labels相关信息
+        imgid = 'P0706__1__0___0'
+        anns = examplesplit.loadAnns(imgId=imgid)
         '''
         anns =
-        [{'name': 'ship', 
-          'difficult': '1', 
-          'poly': [(1054.0, 1028.0), (1063.0, 1011.0), (1111.0, 1040.0), (1112.0, 1062.0)], 
+        [{'name': 'ship',
+          'difficult': '1',
+          'poly': [(1054.0, 1028.0), (1063.0, 1011.0), (1111.0, 1040.0), (1112.0, 1062.0)],
           'area': 1159.5
           },
           ...
-        ]
         '''
-        examplesplit.showAnns(anns, imgid, 2)  # 将labels信息显示在对应id的图片上
+        examplesplit.showAnns(anns, imgid, 2)
         plt.show()

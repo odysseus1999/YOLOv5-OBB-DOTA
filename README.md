@@ -25,12 +25,6 @@ Same as [DOTA_devkit](https://github.com/CAPTAIN-WHU/DOTA_devkit).  Then:
 $  pip install -r requirements.txt
 ```
 
-## More detailed explanation
-想要了解这几个函数实现的细节和原理可以看我的知乎文章;    
-[DOTA遥感数据集以及相关工具DOTA_devkit的整理(踩坑记录)](https://zhuanlan.zhihu.com/p/355862906);    
-[DOTA数据格式转YOLO数据格式工具(cv2.minAreaRect踩坑记录)](https://zhuanlan.zhihu.com/p/356416158);
-
-
 ## Usage Example
 * `DOTA.py`     
 ```javascript
@@ -88,24 +82,3 @@ longside format： classid x_c y_c longside shortside Θ  Θ∈[0, 180)  —— 
 $  Draw_DOTA_YOLO.py
 ```
 ![visualize_augmented_labels](./P0003_augment_.png)
-
-
-## 有问题反馈
-在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
-
-* 知乎（@[略略略](https://www.zhihu.com/people/lue-lue-lue-3-92-86)）
-* 代码问题提issues,其他问题请知乎上联系
-
-
-## 感激
-感谢以下的项目,排名不分先后
-
-* [DOTA_devkit](https://github.com/CAPTAIN-WHU/DOTA_devkit)
-
-## 关于作者
-
-```javascript
-  Name  : "胡凯旋"
-  describe myself："咸鱼一枚"
-  
-```
